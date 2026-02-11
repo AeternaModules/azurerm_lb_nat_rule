@@ -34,7 +34,7 @@ EOT
     frontend_port                  = optional(number)
     frontend_port_end              = optional(number)
     frontend_port_start            = optional(number)
-    idle_timeout_in_minutes        = optional(number, 4)
+    idle_timeout_in_minutes        = optional(number) # Default: 4
     tcp_reset_enabled              = optional(bool)
   }))
 }
