@@ -34,37 +34,16 @@ EOT
     frontend_port                  = optional(number)
     frontend_port_end              = optional(number)
     frontend_port_start            = optional(number)
-    idle_timeout_in_minutes        = optional(number) # Default: 4
+    idle_timeout_in_minutes        = optional(number)
     tcp_reset_enabled              = optional(bool)
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.lb_nat_rules : (
-        length(v.name) > 0
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.lb_nat_rules : (
-        length(v.frontend_ip_configuration_name) > 0
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.lb_nat_rules : (
-        v.idle_timeout_in_minutes == null || (v.idle_timeout_in_minutes >= 4 && v.idle_timeout_in_minutes <= 30)
-      )
-    ])
-    error_message = "must be between 4 and 30"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_lb_nat_rule's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
   # Review, translate into a real validation{} block above, and delete once confirmed.
+  # path: name
+  #   condition: length(value) > 0
+  #   message:   must not be empty
   # path: resource_group_name
   #   condition: length(value) <= 90
   #   message:   [from resourcegroups.ValidateName: invalid when len(value) > 90]
@@ -89,6 +68,9 @@ EOT
   #   source:    validate.PortNumberOrZero: no recognizable `if ... { errors = append(...) }` pattern - read it by hand
   # path: backend_port
   #   source:    validate.PortNumberOrZero: no recognizable `if ... { errors = append(...) }` pattern - read it by hand
+  # path: frontend_ip_configuration_name
+  #   condition: length(value) > 0
+  #   message:   must not be empty
   # path: backend_address_pool_id
   #   source:    [from loadbalancers.ValidateLoadBalancerBackendAddressPoolID] !ok
   # path: backend_address_pool_id
@@ -97,5 +79,8 @@ EOT
   #   source:    validate.PortNumber: no recognizable `if ... { errors = append(...) }` pattern - read it by hand
   # path: frontend_port_end
   #   source:    validate.PortNumber: no recognizable `if ... { errors = append(...) }` pattern - read it by hand
+  # path: idle_timeout_in_minutes
+  #   condition: value >= 4 && value <= 30
+  #   message:   must be between 4 and 30
 }
 
