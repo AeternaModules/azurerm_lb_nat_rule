@@ -14,14 +14,6 @@ output "lb_nat_rules_backend_port" {
   description = "Map of backend_port values across all lb_nat_rules, keyed the same as var.lb_nat_rules"
   value       = { for k, v in azurerm_lb_nat_rule.lb_nat_rules : k => v.backend_port if v.backend_port != null }
 }
-output "lb_nat_rules_enable_floating_ip" {
-  description = "Map of enable_floating_ip values across all lb_nat_rules, keyed the same as var.lb_nat_rules"
-  value       = { for k, v in azurerm_lb_nat_rule.lb_nat_rules : k => v.enable_floating_ip if v.enable_floating_ip != null }
-}
-output "lb_nat_rules_enable_tcp_reset" {
-  description = "Map of enable_tcp_reset values across all lb_nat_rules, keyed the same as var.lb_nat_rules"
-  value       = { for k, v in azurerm_lb_nat_rule.lb_nat_rules : k => v.enable_tcp_reset if v.enable_tcp_reset != null }
-}
 output "lb_nat_rules_floating_ip_enabled" {
   description = "Map of floating_ip_enabled values across all lb_nat_rules, keyed the same as var.lb_nat_rules"
   value       = { for k, v in azurerm_lb_nat_rule.lb_nat_rules : k => v.floating_ip_enabled if v.floating_ip_enabled != null }

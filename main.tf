@@ -8,8 +8,6 @@ resource "azurerm_lb_nat_rule" "lb_nat_rules" {
   protocol                       = each.value.protocol
   resource_group_name            = each.value.resource_group_name
   backend_address_pool_id        = each.value.backend_address_pool_id
-  enable_floating_ip             = each.value.enable_floating_ip
-  enable_tcp_reset               = each.value.enable_tcp_reset
   floating_ip_enabled            = each.value.floating_ip_enabled
   frontend_port                  = each.value.frontend_port
   frontend_port_end              = each.value.frontend_port_end

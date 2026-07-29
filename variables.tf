@@ -10,8 +10,6 @@ Required:
     - resource_group_name
 Optional:
     - backend_address_pool_id
-    - enable_floating_ip
-    - enable_tcp_reset
     - floating_ip_enabled
     - frontend_port
     - frontend_port_end
@@ -28,8 +26,6 @@ EOT
     protocol                       = string
     resource_group_name            = string
     backend_address_pool_id        = optional(string)
-    enable_floating_ip             = optional(bool)
-    enable_tcp_reset               = optional(bool)
     floating_ip_enabled            = optional(bool)
     frontend_port                  = optional(number)
     frontend_port_end              = optional(number)
